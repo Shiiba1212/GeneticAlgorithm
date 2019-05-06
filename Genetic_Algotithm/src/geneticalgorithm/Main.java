@@ -6,12 +6,12 @@ public class Main {
 
 	public static void main(String[] args) {
 		// パラメータ
-		int LIST_SIZE = 20; // 遺伝子長
+		int LIST_SIZE = 30; // 遺伝子長
 		int POPULATION_SIZE = 10; // 個体数
 		int GENERATION = 80; // 世代数
 		double CROSS_RATE = 0.95; // 交叉発生の確率
-		double MUTATE_RATE = 0.2; // 突然変異の確率
-		int SELECT_SIZE = 4; // 選択する個数、今の所"偶数"のみ対応
+		double MUTATE_RATE = 0.1; // 突然変異の確率
+		int SELECT_SIZE = 5; // 選択する個数
 
 		// 初期選択＆適応度計算
 		int[][] Elements = new int[POPULATION_SIZE][LIST_SIZE]; // 実集団
@@ -142,7 +142,7 @@ public class Main {
 		Random rnd = new Random();
 
 		// 選択した個体以外を交叉、またはコピーにより生成する
-		for (int i = slctSize; i < nextElem.length; i = i + 2) {
+		for (int i = slctSize; i < nextElem.length; i++) {
 			// 親を選択
 			int parents1 = rnd.nextInt(slctSize);
 			int parents2 = rnd.nextInt(slctSize);
@@ -163,21 +163,16 @@ public class Main {
 				for (int j = 0; j < nextElem[i].length; j++) {
 					if (intersection1 <= j && j <= intersection2) {
 						nextElem[i][j] = nextElem[parents1][j];
-						nextElem[i + 1][j] = nextElem[parents2][j];
 					} else {
 						nextElem[i][j] = nextElem[parents2][j];
-						nextElem[i + 1][j] = nextElem[parents1][j];
 					}
 				}
-				System.out.println(intersection1+ ":"+intersection2);
 
 			} else {
 				// crossrateに適さない場合はそのままコピー
 				for (int j = 0; j < nextElem[i].length; j++) {
 					nextElem[i][j] = nextElem[parents1][j];
-					nextElem[i + 1][j] = nextElem[parents2][j];
 				}
-				System.out.println("No");
 			}
 		}
 	}
